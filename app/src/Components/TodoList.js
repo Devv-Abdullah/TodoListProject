@@ -19,39 +19,60 @@ import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
 // Components
 import Todo from "./Todo";
 
+// others
+import { useState, useContext, useEffect } from "react";
+import { TodosContext } from "../Contexts/TodosContext";
+
 // uuid npx
 import { v4 as uuidv4 } from "uuid";
 
-// others
-import { useState } from "react";
-
-const initialTodos = [
-  {
-    id: uuidv4(), // كل ما استدعيها بعطيني يونيك id جديد
-    title: "reading a book",
-    details: "skdfjks",
-    isCompleted: false,
-  },
-  {
-    id: uuidv4(),
-    title: "reading a book",
-    details: "skdfjks",
-    isCompleted: false,
-  },
-  {
-    id: uuidv4(),
-    title: "reading a book",
-    details: "skdfjks",
-    isCompleted: false,
-  },
-];
-
 export default function TodoList() {
-  const [todos, setTodos] = useState(initialTodos);
+  const { todos, setTodos } = useContext(TodosContext);
+
   const [titleInput, setTitleInput] = useState("");
-  const todosMap = todos.map((t) => {
-    return <Todo key={t.id} title={t.title} details={t.details} />;
+
+  const [displayedTodosType, setDisplayedTodosType] = useState("all");
+
+  // filteration arrays
+  const completedTodos = todos.filter((t) => {
+    return t.isCompleted;
   });
+
+  const notCompletedTodos = todos.filter((t) => {
+    return !t.isCompleted;
+  });
+
+  let todosToBeRendered = todos;
+
+  if (displayedTodosType == "completed") {
+    todosToBeRendered = completedTodos;
+  } else if (displayedTodosType == "non-completed") {
+    todosToBeRendered = notCompletedTodos;
+  } else {
+    todosToBeRendered = todos;
+  }
+
+  const todosMap = todosToBeRendered.map((t) => {
+    return (
+      <Todo
+        key={t.id}
+        // title={t.title}
+        // details={t.details}
+        // isCompleted={t.isCompleted}
+        // OR
+        todo={t}
+      />
+    );
+  });
+
+  useEffect(() => {
+    const storageTodos = JSON.parse(localStorage.getItem("todos")) || [];
+    setTodos(storageTodos);
+  }, []);
+
+  function changedDisplayType(e) {
+    setDisplayedTodosType(e.target.value);
+  }
 
   function handleAddClick() {
     const newTodo = {
@@ -61,7 +82,11 @@ export default function TodoList() {
       isCompleted: false,
     };
 
-    setTodos([...todos, newTodo]);
+    const updatedTodos = [...todos, newTodo];
+
+    // setTodos([...todos, newTodo]);
+    setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
     setTitleInput(""); // عشان بعد ما احط اد في الانبت ينحذفوا وما يضلوا
   }
   return (
@@ -73,14 +98,14 @@ export default function TodoList() {
           {/* toggle button */}
           <ToggleButtonGroup
             style={{ direction: "ltr", marginTop: "30px" }}
-            // value={alignment}
+            value={displayedTodosType}
             exclusive
-            // onChange={handleAlignment}
+            onChange={changedDisplayType}
             aria-label="text alignment"
           >
-            <ToggleButton value="left">All</ToggleButton>
-            <ToggleButton value="center">Finished</ToggleButton>
-            <ToggleButton value="right">Unfinished</ToggleButton>
+            <ToggleButton value="all">All</ToggleButton>
+            <ToggleButton value="completed">Finished</ToggleButton>
+            <ToggleButton value="non-completed">Unfinished</ToggleButton>
           </ToggleButtonGroup>
           {/* =========== toggle button ========== */}
 
