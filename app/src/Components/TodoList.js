@@ -91,10 +91,14 @@ export default function TodoList() {
   }
   return (
     <Container maxWidth="sm">
-      <Card sx={{ minWidth: 275 }}>
+      <Card
+        sx={{ minWidth: 275 }}
+        style={{ maxHeight: "80vh", overflow: "scroll" }} //يعتمد على حجم نافذة العرض، مما يجعله مناسبًا للتصميمات المتجاوبة
+      >
         <CardContent>
           <Typography variant="h2">My tasks</Typography>
           <Divider />
+
           {/* toggle button */}
           <ToggleButtonGroup
             style={{ direction: "ltr", marginTop: "30px" }}
@@ -103,9 +107,15 @@ export default function TodoList() {
             onChange={changedDisplayType}
             aria-label="text alignment"
           >
-            <ToggleButton value="all">All</ToggleButton>
-            <ToggleButton value="completed">Finished</ToggleButton>
-            <ToggleButton value="non-completed">Unfinished</ToggleButton>
+            <ToggleButton className="hover-button" value="all">
+              All
+            </ToggleButton>
+            <ToggleButton className="hover-button" value="completed">
+              Finished
+            </ToggleButton>
+            <ToggleButton className="hover-button" value="non-completed">
+              Unfinished
+            </ToggleButton>
           </ToggleButtonGroup>
           {/* =========== toggle button ========== */}
 
@@ -145,12 +155,14 @@ export default function TodoList() {
                 onClick={() => {
                   handleAddClick();
                 }}
+                disabled={titleInput.length == 0}
               >
                 Addition
               </Button>
             </Grid>
           </Grid>
           {/* === input + add button === */}
+          
         </CardContent>
       </Card>
     </Container>

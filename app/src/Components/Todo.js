@@ -89,6 +89,7 @@ export default function Todo({ todo, handleCheck }) {
   }
   return (
     <>
+
       {/* Delete dialog */}
       <Dialog
         style={{ direction: "ltr" }}
@@ -160,11 +161,13 @@ export default function Todo({ todo, handleCheck }) {
         </DialogActions>
       </Dialog>
       {/* ===Update dialog=== */}
+
       <Card
         className="todoCard"
         sx={{
           minWidth: 275,
-          background: "#283593",
+          // background: "#283593",
+          background: "#263238",
           color: "white",
           marginTop: 5,
         }}
@@ -172,11 +175,21 @@ export default function Todo({ todo, handleCheck }) {
         <CardContent>
           <Grid container spacing={2}>
             <Grid size={8}>
-              <Typography sx={{ textAlign: "left", fontSize: "25px", color: "white" }}>
+              <Typography
+                sx={{
+                  textAlign: "left",
+                  fontSize: "25px",
+                  color: "white",
+                  textDecoration: todo.isCompleted ? "line-through" : "none",
+                }}
+              >
                 {todo.title}
               </Typography>
 
-              <Typography sx={{ textAlign: "left", fontSize: "12px", color: "white" }}>
+              <Typography
+                // color: "#0091ea"
+                sx={{ textAlign: "left", fontSize: "12px", color: "white" }}
+              >
                 {todo.details}
               </Typography>
             </Grid>
@@ -188,6 +201,7 @@ export default function Todo({ todo, handleCheck }) {
               justifyContent="space-around"
               alignItems="center"
             >
+
               {/* Check icon button */}
               <IconButton
                 onClick={() => {
@@ -237,8 +251,10 @@ export default function Todo({ todo, handleCheck }) {
                 <DeleteOutlinedIcon />
               </IconButton>
               {/* ===Delete button=== */}
+
             </Grid>
             {/* === Action buttons === */}
+            
           </Grid>
         </CardContent>
       </Card>

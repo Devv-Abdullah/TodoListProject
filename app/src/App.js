@@ -8,12 +8,6 @@ import { useState } from "react";
 // uuid npx
 import { v4 as uuidv4 } from "uuid";
 
-// const theme = createTheme({
-//   typography: {
-//     fontFamily: ["Nunito"],
-//   },
-// });
-
 // const initialTodos = [
 //   {
 //     id: uuidv4(), // كل ما استدعيها بعطيني يونيك id جديد
@@ -37,7 +31,6 @@ import { v4 as uuidv4 } from "uuid";
 function App() {
   const [todos, setTodos] = useState([]);
   return (
-    // <ThemeProvider theme={theme}>
     <div
       className="App"
       style={{
@@ -53,7 +46,6 @@ function App() {
         <TodoList />
       </TodosContext.Provider>
     </div>
-    // </ThemeProvider>
   );
 }
 
