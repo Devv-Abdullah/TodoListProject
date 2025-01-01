@@ -96,7 +96,7 @@ export default function TodoList() {
         style={{ maxHeight: "80vh", overflow: "scroll" }} //يعتمد على حجم نافذة العرض، مما يجعله مناسبًا للتصميمات المتجاوبة
       >
         <h1 style={{ fontSize: "9px", color: "#1a237e" }}>
-          developer Abdullah mohammed
+          Developer Abdullah Mohammed
         </h1>
         <CardContent>
           <Typography variant="h2">My tasks</Typography>
