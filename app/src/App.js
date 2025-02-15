@@ -1,7 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
 import TodoList from "./Components/TodoList";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { TodosContext } from "./Contexts/TodosContext";
 import { useState } from "react";
 
